@@ -1,6 +1,9 @@
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
     const {
@@ -9,7 +12,31 @@ const Login = () => {
     watch,
     formState: { errors },
     } = useForm()
-    const onSubmit = (data) => console.log(data);
+    const navigate = useNavigate(); // khởi tạo navigate
+    const onSubmit = async  (data) => {
+        const response = await fetch("http://127.0.0.1:8000/api/authenticate", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (result.status == false) {
+            toast.error(result.message);
+        } else {
+
+            console.log(result);
+            const userInfo = {
+                id : result.id,
+                token : result.token,
+            }
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            toast.success(result.message);
+            navigate('/admin/dashboard');
+        }
+    }
   return (
     <>
         <Header />
@@ -21,7 +48,7 @@ const Login = () => {
                     <div className="card border-0 shadow">
                         <div className="card-body p-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <h3 className="mb-4 text-center">Login</h3>
+                                <h3 className="mb-4 text-center">Đăng nhập hệ thống</h3>
                                 <div className="mb-3">
                                     <label htmlFor="" className="form-label">Email</label>
                                     <input 
@@ -54,7 +81,7 @@ const Login = () => {
                                     />
                                     {errors.password && <span className="invalid-feedback">{errors.password.message}</span>}
                                 </div>
-                                <button type="submit" className="btn btn-primary">Login</button>
+                                <button type="submit" className="btn btn-primary d-block mx-auto">Đăng nhập</button>
                             </form>
 
                         </div>

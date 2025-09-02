@@ -5,7 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './component/frontend/Home';
 import About from './component/frontend/About';
-import Login from './component/backend/login';  
+import Login from './component/backend/login'; 
+import Dashboard from './component/backend/dashboard'; 
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 function App() {
@@ -20,8 +24,10 @@ function App() {
 
           {/* ADMIN */}
           <Route path="/admin/login" element={<Login/>} />
+          <Route path="/admin/dashboard" element={<Dashboard/>} />
         </Routes>
       </Router>
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   )
 }

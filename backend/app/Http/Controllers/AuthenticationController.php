@@ -14,7 +14,7 @@ class AuthenticationController extends Controller
         // Validate dữ liệu từ React
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -27,14 +27,14 @@ class AuthenticationController extends Controller
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'status' => false,
-                'message' => 'Email hoặc mật khẩu không đúng',
-            ], 401);
+                'message' => 'Email hoặc mật khẩu không đúng'
+            ]);
         }
 
         return response()->json([
+            'id' => Auth::user()->id,
             'status' => true,
             'message' => 'Đăng nhập thành công',
-            'user'   => Auth::user(),
             'token'  => $request->user()->createToken('API Token')->plainTextToken
         ]);
         
