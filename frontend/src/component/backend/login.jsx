@@ -1,8 +1,11 @@
+import React, { useContext, useEffect } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./context/Auth";
+import { Navigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -12,7 +15,17 @@ const Login = () => {
     watch,
     formState: { errors },
     } = useForm()
-    const navigate = useNavigate(); // khởi tạo navigate
+
+    const { login, user } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    // Nếu đã login thì redirect thẳng vào dashboard
+    if (user) {
+        return <Navigate to = "/admin/dashboard" />
+    }
+
+
     const onSubmit = async  (data) => {
         const response = await fetch("http://127.0.0.1:8000/api/authenticate", {
             method: "POST",
@@ -26,13 +39,12 @@ const Login = () => {
         if (result.status == false) {
             toast.error(result.message);
         } else {
-
-            console.log(result);
             const userInfo = {
                 id : result.id,
                 token : result.token,
             }
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            login(userInfo);
+
             toast.success(result.message);
             navigate('/admin/dashboard');
         }

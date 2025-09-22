@@ -9,7 +9,7 @@ import Login from './component/backend/login';
 import Dashboard from './component/backend/dashboard'; 
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
+import RequireAuth from './component/common/RequireAuth';
 
 
 function App() {
@@ -24,7 +24,12 @@ function App() {
 
           {/* ADMIN */}
           <Route path="/admin/login" element={<Login/>} />
-          <Route path="/admin/dashboard" element={<Dashboard/>} />
+          <Route path="/admin/dashboard" element={
+            <RequireAuth>
+                <Dashboard/>
+            </RequireAuth>
+            } 
+          />
         </Routes>
       </Router>
       <ToastContainer position="top-center" autoClose={2000} />
