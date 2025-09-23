@@ -24,7 +24,7 @@ function App() {
 
           {/* ADMIN */}
           <Route path="/admin/login" element={<Login/>} />
-          <Route path="/admin/dashboard" element={
+          <Route path="/admin" element={
             <RequireAuth>
                 <Dashboard/>
             </RequireAuth>

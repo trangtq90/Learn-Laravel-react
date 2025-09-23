@@ -22,7 +22,7 @@ const Login = () => {
 
     // Nếu đã login thì redirect thẳng vào dashboard
     if (user) {
-        return <Navigate to = "/admin/dashboard" />
+        return <Navigate to = "/admin" />
     }
 
 
@@ -46,7 +46,7 @@ const Login = () => {
             login(userInfo);
 
             toast.success(result.message);
-            navigate('/admin/dashboard');
+            navigate('/admin');
         }
     }
   return (
