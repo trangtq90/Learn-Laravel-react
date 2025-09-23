@@ -19,7 +19,7 @@ const Footer = () => {
             </div>
           </div>
           <hr />
-          <div className='text-center pt-4'>&copy; 2024 All Rights Reserved. Designed by Lớp Toán Thầy Tráng</div>
+          <div className='text-center pt-4'>&copy; 2025 All Rights Reserved. Designed by Lớp Toán Thầy Tráng</div>
         </div>
     </footer>
   )
